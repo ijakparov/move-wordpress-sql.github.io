@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>How to move WordPress DataBase to new domain</title>
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <style>
+  	*{
+  		font-family: "Ubuntu";
+  		line-height: 1.5
+  	}
+  </style>
+</head>
+<body>
+	<div action="">
+	<h1 style="text-align:center">Generate sql query to replace old domain values to new in wordpress DB</h1>
+	<table style="margin:auto;width:600px">
+		<tr>
+			<td>Prefix</td>
+			<td><input type="text" name="prefix" value="wp"></td>
+		</tr>
+		<tr>
+			<td>Old domain name without http://</td>
+			<td><input type="text" name="old" value="google.ru" placeholder="Old domain name here"></td>
+		</tr>
+		<tr>
+			<td>New domain name without http://</td>
+			<td><input type="text" name="new" value="yandex.ru" placeholder="New domain name here"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button class="btn">Submit</button></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<br>
+
+			</td>
+			
+		</tr>
+		<tr>
+			<td colspan="2" id="codeHere">
+				
+
+			</td>
+			
+		</tr>
+	</table>
+
+
+	</div>
+
+
+
+	<script>
+		
+		$( document ).ready(function() {
+
+			jQuery(".btn").click(function(){
+				var prefix = jQuery("input[name='prefix']").val();
+				var old = jQuery("input[name='old']").val();
+				var newdomain = jQuery("input[name='new']").val();
+
+				var text = "UPDATE "+prefix+"_options SET option_value = replace(option_value, 'http://"+old+"', 'http://"+newdomain+"') WHERE option_name = 'home' OR option_name = 'siteurl';<br>UPDATE "+prefix+"_posts SET guid = replace(guid, 'http://"+old+"','http://"+newdomain+"');<br>UPDATE "+prefix+"_posts SET post_content = replace(post_content, 'http://"+old+"', 'http://"+newdomain+"');";
+
+				jQuery("#codeHere").html(text);				
+			});
+
+		});
+	</script>
+</body>
+</html>
